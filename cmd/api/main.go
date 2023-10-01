@@ -10,8 +10,7 @@ import (
 )
 
 const (
-	httpPort = "8080"
-	httpHost = "localhost:" // 127.0.0.1
+	httpPort = ":8080"
 )
 
 func main() {
@@ -25,7 +24,7 @@ func main() {
 	router.HandleFunc("/deliver/v1/add-order/", handler.AddOrder).Methods(http.MethodPost)
 
 	srv := &http.Server{
-		Addr:        httpHost + httpPort,
+		Addr:        httpPort,
 		ReadTimeout: time.Second * 10,
 		Handler:     router,
 	}
