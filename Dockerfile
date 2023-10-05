@@ -10,5 +10,6 @@ FROM alpine:latest
 
 WORKDIR /root/
 COPY --from=builder /bin/uzum_delivery_service .
+COPY --from=builder /app/dev/local.env dev/local.env
 
 CMD ["./uzum_delivery_service"]
