@@ -6,7 +6,8 @@ type Config struct {
 }
 
 type APP struct {
-	Port string `envconfig:"PORT"`
+	Port        string `envconfig:"PORT"`
+	LoginClient string `envconfig:"AUTH_CLIENT"`
 }
 
 type Postgres struct {

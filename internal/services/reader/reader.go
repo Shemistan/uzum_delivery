@@ -1,4 +1,4 @@
-package main
+package reader
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
-func main() {
+func KafkaReader() {
 	// Настройка подключения к кафке
 	config := &kafka.ConfigMap{
 		"bootstrap.servers": "localhost:29092",   // адресс
@@ -22,15 +22,15 @@ func main() {
 		return
 	}
 
-	topics := []string{"my_topic"}
+	topics := []string{"mytopic"}
 
 	err = consumer.SubscribeTopics(topics, nil)
 	if err != nil {
-		log.Println("failed to send tipics")
+		log.Println("failed to receive tipics")
 		return
 	}
 
-	log.Println("Жду сообщений----------->")
+	log.Println("Жду сообщений----------->1")
 	for {
 		msg, err := consumer.ReadMessage(-1)
 		if err == nil {
@@ -38,7 +38,7 @@ func main() {
 			// сохранит это в БД
 			fmt.Println(string(msg.Value)) // service.Add()
 		} else {
-			fmt.Println("Error to read message")
+			fmt.Println("Error to read message1")
 		}
 	}
 }

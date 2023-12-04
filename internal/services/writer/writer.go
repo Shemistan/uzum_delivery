@@ -1,4 +1,4 @@
-package main
+package writer
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
-func main() {
+func KafkaWriter() {
 	// Настройка подключения к кафке
 	config := &kafka.ConfigMap{
 		"bootstrap.servers": "localhost:29092", // адресс
@@ -22,7 +22,7 @@ func main() {
 	}
 
 	producer.Flush(15 * 1000)
-	topic := "my_topic"
+	topic := "mytopic"
 
 	i := 0
 	for {
@@ -43,6 +43,6 @@ func main() {
 		log.Println("Отправлено сообщение номер: ", i)
 		i++
 
-		time.Sleep(2 * time.Second)
+		time.Sleep(20 * time.Second)
 	}
 }
