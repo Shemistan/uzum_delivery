@@ -1,35 +1,27 @@
 package service
 
 import (
-	"time"
-
+	"context"
 	"github.com/Shemistan/uzum_delivery/internal/models"
+	"github.com/Shemistan/uzum_delivery/internal/storage"
+	pbLogin "github.com/Shemistan/uzum_delivery/pkg/login_v1"
 )
 
 type IService interface {
-	GetOrder(id int64) (*models.Order, error)
+	VerifyToken(ctx context.Context) (int, error)
+	GetOrder(ctx context.Context, id int64, courierId int64) (*models.Order, error)
+	GetOrders(ctx context.Context, coord *models.Coordinate) ([]*models.IdDist, error)
+	CloseOrder(ctx context.Context, id int64) error
 }
 
-func NewService() IService {
-	return &service{}
+func NewService(storage storage.IStorage, loginClient pbLogin.LoginV1Client) IService {
+	return &service{
+		Storage:     storage,
+		loginClient: loginClient,
+	}
 }
 
 type service struct {
-	//Store storage.IStorage
-}
-
-func (s *service) GetOrder(id int64) (*models.Order, error) {
-	return &models.Order{
-		ID:      id,
-		Name:    "test Name",
-		Phone:   "Phone",
-		Address: "Address",
-		Coordinate: &models.Coordinate{
-			Longitude: 54.234,
-			Latitude:  37.454,
-		},
-		Meta:         "Address",
-		Status:       "Address",
-		DeliveryTime: time.Time{},
-	}, nil
+	loginClient pbLogin.LoginV1Client
+	Storage     storage.IStorage
 }

@@ -8,22 +8,25 @@ type Order struct {
 	Phone   string `json:"phone"`
 	Address string `json:"address"`
 
-	Coordinate *Coordinate `json:"coordinate"`
+	CoordinateAddress Coordinate `json:"coordinateAddress"`
+	CoordinatePickup  Coordinate `json:"coordinatePickup"`
 
-	Meta         string    `json:"meta"`
-	Status       string    `json:"status"`
-	DeliveryTime time.Time `json:"delivery_time"`
+	Meta      string    `json:"meta,omitempty"`
+	StartedAt time.Time `json:"startedAt"`
 }
 
 type Coordinate struct {
-	Longitude float64 `json:"longitude"`
 	Latitude  float64 `json:"latitude"`
+	Longitude float64 `json:"longitude"`
 }
 
-type Product struct {
-	ID          int64  `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Price       int64  `json:"price"`
-	Count       int64  `json:"count"`
+type GetOrders struct {
+	ID          int64       `json:"id"`
+	DropCoord   *Coordinate `json:"dropCoordinate"`
+	PickUpCoord *Coordinate `json:"pickupCoordinate"`
+}
+
+type IdDist struct {
+	Id   int64
+	Dist float64
 }

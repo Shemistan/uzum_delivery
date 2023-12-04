@@ -9,16 +9,18 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func (h *handler) GiveOrder(w http.ResponseWriter, r *http.Request) {
+func (h *handler) GetOrder(w http.ResponseWriter, r *http.Request) {
+	ctx, courierId := handleToken(h, w, r)
+
 	id := mux.Vars(r)["id"]
 
 	intID, err := strconv.Atoi(id)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	res, err := h.serv.GetOrder(int64(intID))
+	res, err := h.serv.GetOrder(ctx, int64(intID), int64(courierId))
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return

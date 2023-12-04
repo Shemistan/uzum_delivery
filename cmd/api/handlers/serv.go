@@ -8,8 +8,9 @@ import (
 
 type IHandlers interface {
 	Healthz(w http.ResponseWriter, r *http.Request)
-	GiveOrder(w http.ResponseWriter, r *http.Request)
-	AddOrder(w http.ResponseWriter, r *http.Request)
+	GetOrders(w http.ResponseWriter, r *http.Request)
+	GetOrder(w http.ResponseWriter, r *http.Request)
+	CloseOrder(w http.ResponseWriter, r *http.Request)
 }
 
 func NewHandler(serv service.IService) IHandlers {
